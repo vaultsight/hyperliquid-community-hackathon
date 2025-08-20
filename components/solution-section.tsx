@@ -1,17 +1,30 @@
-import { Card, CardContent } from "@/components/ui/card"
+'use client'
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Card, CardContent } from '@/components/ui/card'
+import {
+  ChartContainer,
+  ChartConfig,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
 
 const mockData = [
-  { month: "Jan", value: 100 },
-  { month: "Feb", value: 120 },
-  { month: "Mar", value: 110 },
-  { month: "Apr", value: 140 },
-  { month: "May", value: 160 },
-  { month: "Jun", value: 180 },
+  { month: 'Jan', value: 100 },
+  { month: 'Feb', value: 120 },
+  { month: 'Mar', value: 110 },
+  { month: 'Apr', value: 140 },
+  { month: 'May', value: 160 },
+  { month: 'Jun', value: 180 },
 ]
 
+const chartConfig = {
+  value: {
+    label: 'Value',
+    color: 'hsl(var(--primary))',
+  },
+} satisfies ChartConfig
+
 export function SolutionSection() {
-  const maxValue = Math.max(...mockData.map(d => d.value))
-  
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-[#0A2F2A] to-background">
       <div className="max-w-6xl mx-auto">
@@ -45,19 +58,42 @@ export function SolutionSection() {
               <h3 className="text-2xl font-bold font-montserrat text-card-foreground mb-6">
                 Vault Analytics Dashboard
               </h3>
-              <div className="h-64 flex items-end justify-between space-x-2">
-                {mockData.map((data, index) => (
-                  <div key={index} className="flex flex-col items-center flex-1">
-                    <div 
-                      className="w-full bg-primary rounded-t-sm transition-all duration-500 hover:bg-primary/80"
-                      style={{ 
-                        height: `${(data.value / maxValue) * 200}px`,
-                        minHeight: '8px'
-                      }}
-                    ></div>
-                    <span className="text-xs font-medium text-card-foreground mt-2">{data.month}</span>
-                  </div>
-                ))}
+              <div className="h-64 w-full">
+                <ChartContainer config={chartConfig}>
+                  <AreaChart
+                    accessibilityLayer
+                    data={mockData}
+                    margin={{
+                      left: 12,
+                      right: 12,
+                    }}
+                  >
+                    <CartesianGrid vertical={false} stroke="#000000" strokeOpacity={0.1} />
+                    <XAxis
+                      dataKey="month"
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={8}
+                      tickFormatter={(value) => value.slice(0, 3)}
+                      stroke="#000000"
+                    />
+                    <YAxis stroke="#000000" axisLine={false} tickLine={false} tickMargin={8} />
+                    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+                    <defs>
+                      <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0.1} />
+                      </linearGradient>
+                    </defs>
+                    <Area
+                      dataKey="value"
+                      type="natural"
+                      fill="url(#chartGradient)"
+                      stroke="var(--color-primary)"
+                      stackId="a"
+                    />
+                  </AreaChart>
+                </ChartContainer>
               </div>
               <div className="mt-4 text-center">
                 <p className="text-sm text-card-foreground/70">Performance over time</p>
