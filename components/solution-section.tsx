@@ -68,7 +68,7 @@ export function SolutionSection() {
                       right: 12,
                     }}
                   >
-                    <CartesianGrid vertical={false} stroke="#000000" strokeOpacity={0.1} />
+                    <CartesianGrid vertical={false} stroke="#000000" strokeOpacity={0.2} />
                     <XAxis
                       dataKey="month"
                       tickLine={false}
@@ -78,7 +78,10 @@ export function SolutionSection() {
                       stroke="#000000"
                     />
                     <YAxis stroke="#000000" axisLine={false} tickLine={false} tickMargin={8} />
-                    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent indicator="dot" labelClassName="text-foreground" />}
+                    />
                     <defs>
                       <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8} />
