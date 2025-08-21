@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export function HeroSection() {
   return (
@@ -41,13 +42,15 @@ export function HeroSection() {
           capital allocation decisions.
         </p>
 
-        <Button
-          size="lg"
-          className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-4 text-lg font-open-sans group"
-        >
-          View Live Demo
-          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-        </Button>
+        <Link href="http://206.189.92.214:8080/" target="_blank" rel="noopener noreferrer">
+          <Button
+            size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-4 text-lg font-open-sans group"
+          >
+            View Live Demo
+            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </Link>
       </div>
     </section>
   )
