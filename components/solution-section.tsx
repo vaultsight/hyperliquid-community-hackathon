@@ -9,18 +9,26 @@ import {
 } from '@/components/ui/chart'
 
 const mockData = [
-  { month: 'Jan', value: 100 },
-  { month: 'Feb', value: 120 },
-  { month: 'Mar', value: 110 },
-  { month: 'Apr', value: 140 },
-  { month: 'May', value: 160 },
-  { month: 'Jun', value: 180 },
+  { month: "Jan", vault: 1000, btc: 800, eth: 600 },
+  { month: "Feb", vault: 1150, btc: 850, eth: 700 },
+  { month: "Mar", vault: 1300, btc: 950, eth: 850 },
+  { month: "Apr", vault: 1250, btc: 1000, eth: 900 },
+  { month: "May", vault: 1450, btc: 1100, eth: 1000 },
+  { month: "Jun", vault: 1600, btc: 1200, eth: 1150 },
 ]
 
 const chartConfig = {
-  value: {
-    label: 'Value',
-    color: 'hsl(var(--primary))',
+  vault: {
+    label: "Vault Performance",
+    color: "hsl(var(--chart-1))",
+  },
+  btc: {
+    label: "Bitcoin (BTC)",
+    color: "hsl(var(--chart-2))",
+  },
+  eth: {
+    label: "Ethereum (ETH)",
+    color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig
 
@@ -56,7 +64,7 @@ export function SolutionSection() {
           <Card className="bg-card border-border">
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold font-montserrat text-card-foreground mb-6">
-                Vault Analytics Dashboard
+                Benchmark Performance Comparison
               </h3>
               <div className="h-64 w-full">
                 <ChartContainer config={chartConfig}>
@@ -77,29 +85,48 @@ export function SolutionSection() {
                       tickFormatter={(value) => value.slice(0, 3)}
                       stroke="#000000"
                     />
-                    <YAxis stroke="#000000" axisLine={false} tickLine={false} tickMargin={8} />
+                    <YAxis
+                      stroke="#000000"
+                      axisLine={false}
+                      tickLine={false}
+                      tickMargin={8}
+                      tickFormatter={(value) => `$${value}`}
+                    />
                     <ChartTooltip
-                      cursor={false}
+                      cursor={true}
                       content={<ChartTooltipContent indicator="dot" labelClassName="text-foreground" />}
                     />
-                    <defs>
-                      <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0.1} />
-                      </linearGradient>
-                    </defs>
                     <Area
-                      dataKey="value"
+                      dataKey="vault"
                       type="natural"
-                      fill="url(#chartGradient)"
-                      stroke="var(--color-primary)"
+                      fill="var(--color-vault)"
+                      fillOpacity={0.4}
+                      stroke="var(--color-vault)"
                       stackId="a"
+                    />
+                    <Area
+                      dataKey="btc"
+                      type="natural"
+                      fill="var(--color-btc)"
+                      fillOpacity={0.3}
+                      stroke="var(--color-btc)"
+                      strokeDasharray="4 4"
+                      stackId="b"
+                    />
+                    <Area
+                      dataKey="eth"
+                      type="natural"
+                      fill="var(--color-eth)"
+                      fillOpacity={0.2}
+                      stroke="var(--color-eth)"
+                      strokeDasharray="8 8"
+                      stackId="c"
                     />
                   </AreaChart>
                 </ChartContainer>
               </div>
               <div className="mt-4 text-center">
-                <p className="text-sm text-card-foreground/70">Performance over time</p>
+                <p className="text-sm text-card-foreground/70">Vault vs. Bitcoin & Ethereum benchmarks</p>
               </div>
             </CardContent>
           </Card>
